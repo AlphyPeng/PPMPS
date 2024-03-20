@@ -603,19 +603,29 @@ function ClearFieldDetails() {
 }
 
 // Printing
+//$("#printButton").click(function () {
+//    // Clone the section and remove buttons
+//    var contentSection = $(".content").clone();
+//    contentSection.find(".btn").remove();
+
+//    // Iterate over input fields and append their values to the cloned section
+//    contentSection.find("input").each(function () {
+//        var $this = $(this);
+//        $this.attr("value", $this.val());
+//    });
+
+//    // Create a new window and print the cloned section
+//    var printWindow = window.open('', '_blank');
+//    printWindow.document.body.innerHTML = contentSection[0].outerHTML;
+//    printWindow.print();
+//});
+
+
+// Add a click event handler to the print button
 $("#printButton").click(function () {
-    // Clone the section and remove buttons
-    var contentSection = $(".content").clone();
-    contentSection.find(".btn").remove();
-
-    // Iterate over input fields and append their values to the cloned section
-    contentSection.find("input").each(function () {
-        var $this = $(this);
-        $this.attr("value", $this.val());
-    });
-
-    // Create a new window and print the cloned section
-    var printWindow = window.open('', '_blank');
-    printWindow.document.body.innerHTML = contentSection[0].outerHTML;
-    printWindow.print();
+    // Print the section
+    window.print();
 });
+
+
+ 

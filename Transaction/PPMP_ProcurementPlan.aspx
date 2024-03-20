@@ -1,11 +1,33 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="PPMP_ProcurementPlan.aspx.cs" Inherits="PPMPS.Transaction.PPMP_ProcurementPlan" %>
+﻿
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="PPMP_ProcurementPlan.aspx.cs" Inherits="PPMPS.Transaction.PPMP_ProcurementPlan" %>
 
 <asp:Content ID="Styles" ContentPlaceHolderID="globalStyles" runat="server">
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="content-header">
+
+    <style>
+   @media print {
+        @page {
+        size: landscape;
+           margin: 0;
+    }
+        #printButton,
+        #addProcurement,
+        #editProcurement,
+        #cancelProcurement,
+        #saveProcurement,
+       #postPPMP,
+        #procurementTitle,
+        #listPPMP
+        {
+            display: none;
+        }
+
+    }
+</style>
+    <div class="content-header" id="procurementTitle">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
@@ -23,7 +45,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 col" id="listPPMP">
                     <div class="card card-success">
                         <div class="card">
                             <div class="card-header theme-color">
@@ -44,48 +66,48 @@
                 </div>
 
 
-                <div class="col-md-9">
+                <div class="col-md-9 col-12">
                     <div class="card">
                         <div class="card-header theme-color">
                             <h5 class="card-title">List of Procuments</h5>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-9 col-9">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-6">
                                             <div class="form-group">
                                                 <label for="PPMPCode">PPMP Code</label>
                                                 <input type="text" class="form-control" id="PPMPCode" readonly />
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-6">
                                             <div class="form-group">
                                                 <label for="ProgramTitle">Program Title</label>
                                                 <input type="text" class="form-control" id="ProgramTitle" placeholder="Enter program title" />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-6">
                                             <div class="form-group">
                                                 <label for="AccountTitle">Account Title</label>
                                                 <input type="text" class="form-control" id="AccountTitle" placeholder="Enter account title" />
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-6">
                                             <div class="form-group">
                                                 <label for="Department">Department</label>
                                                 <input type="text" class="form-control" id="Department" placeholder="Enter department title" />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-6">
                                             <div class="form-group">
                                                 <label for="DeliverySchedule">Delivery Schedule</label>
                                                 <input type="date" class="form-control" id="DeliverySchedule" />
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-6">
                                             <div class="form-group">
                                                 <label for="PaymentTerms">Payment Terms</label>
                                                 <select id="PaymentTerms" class="form-control">
@@ -96,7 +118,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 col-12">
                                             <div class="form-group">
                                                 <label for="description">Description</label>
                                                 <textarea class="form-control" rows="3" id="description" placeholder="Enter description"></textarea>
@@ -105,7 +127,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-3">
                                     <div class="card card-success card-outline">
                                         <div class="card-body box-profile">
                                             <h3 class="profile-username text-center">Summary</h3>
