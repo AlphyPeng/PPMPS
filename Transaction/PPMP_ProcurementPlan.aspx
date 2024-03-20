@@ -5,28 +5,39 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
-
-    <style>
+        <style>
    @media print {
+       body {
+           -webkit-print-color-adjust: exact;
+               background-color: white;
+       }
+       #cardPrint, .content{
+           background-color: white;
+           border-color: white !important;
+       }
+         .dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+            .dataTables_wrapper .dataTables_paginate .paginate_button.next,
+            .dataTables_wrapper .dataTables_paginate {
+                display: none !important;
+            }
         @page {
         size: landscape;
-           margin: 0;
-    }
-        #printButton,
-        #addProcurement,
-        #editProcurement,
-        #cancelProcurement,
-        #saveProcurement,
-       #postPPMP,
-        #procurementTitle,
-        #listPPMP
-        {
+              margin: 10px 0; 
+        }
+            #printButton,
+            #addItems,
+            #addProcurement,
+            #editProcurement,
+            #cancelProcurement,
+            #saveProcurement,
+            #postPPMP,
+            #procurementTitle,
+            #listPPMP{
             display: none;
         }
-
     }
 </style>
+
     <div class="content-header" id="procurementTitle">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -66,7 +77,7 @@
                 </div>
 
 
-                <div class="col-md-9 col-12">
+                <div class="col-md-9 col-12" id="cardPrint">
                     <div class="card">
                         <div class="card-header theme-color">
                             <h5 class="card-title">List of Procuments</h5>
@@ -128,7 +139,7 @@
 
                                 </div>
                                 <div class="col-md-3 col-3">
-                                    <div class="card card-success card-outline">
+                                    <div class="card card-success card-outline" id="summaryCard">
                                         <div class="card-body box-profile">
                                             <h3 class="profile-username text-center">Summary</h3>
                                             <ul class="list-group list-group-unbordered mb-3">
