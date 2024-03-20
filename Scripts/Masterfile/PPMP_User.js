@@ -1,4 +1,4 @@
-﻿var userTable;
+﻿﻿var userTable;
 var Action;
 var brgyList = [];
 
@@ -27,7 +27,7 @@ function PopulateRoles() {
                 var option = new Option(item.RoleName, item.Id, false, false);
                 $("#ddlRoles").append(option);
             }
-
+         
         }
     })
 }
@@ -96,17 +96,17 @@ $('#ddlRoles').on('change', function () {
         ClearRoles();
         $("#optAllocationHealthCenter").prop("checked", true);
         $("#optReports").prop("checked", true);
-
+        
     }
     else if (roles == "Health Center Staff") {
         ClearRoles();
         $("#optAllocationPatient").prop("checked", true);
         $("#optReports").prop("checked", true);
-
+       
     }
 
     RoleValidation(roles);
-
+    
 
 });
 
@@ -130,7 +130,7 @@ function PopulateUsers() {
                     },
                     {
                         "data": "RoleName",
-                        "orderable": false
+                        "orderable":false
                     },
                     {
                         "data": null,
@@ -199,7 +199,7 @@ function User_Edit() {
                     }).attr('selected', true);
                 };
 
-
+             
 
                 let result = permissions[0].Modules.split(',');
 
@@ -244,7 +244,7 @@ function User_Edit() {
                     if (result[i] == "T006") {
                         $("#optAllocationPatient").prop("checked", true);
                     }
-
+                    
                     if (result[i] == "R001") {
                         $("#optReports").prop("checked", true);
                     }
@@ -254,8 +254,8 @@ function User_Edit() {
 
                 RoleValidation(roles);
 
-
-
+                
+               
                 $('#userModal').modal('show');
             }
         })
@@ -313,7 +313,7 @@ function AddOrEditUser() {
 
 
 
-    let arrayModule = [];
+    let arrayModule = []; 
 
     if (medicine == true) {
         arrayModule.push("M001");
@@ -414,9 +414,9 @@ function AddOrEditUser() {
                         $('#userModal').modal('hide');
                     }
                 })
-            }
+}
         })
-
+        
     }
 }
 
@@ -436,12 +436,12 @@ function RoleValidation(role, BarangayName) {
     if (role == "District Pharmacist") {
         $("#districtsDropdown").attr("disabled", false);
         $("#BarangayDropdown").attr("disabled", true);
-
+       
 
     } else if (role == "Health Center Staff") {
         $("#districtsDropdown").attr("disabled", false);
         $("#BarangayDropdown").attr("disabled", true);
-
+        
     } else {
         $("#districtsDropdown").attr("disabled", true);
         $("#BarangayDropdown").attr("disabled", true);
@@ -452,9 +452,17 @@ function RoleValidation(role, BarangayName) {
 
 $('#districtsDropdown').on('change', function () {
 
-    $('#BarangayDropdown').attr('disabled', false);
-    $('#BarangayDropdown').empty().append('<option selected hidden disabled>Select a Barangay</option>');
-    $.each(brgyList, function (index, code) {
+    var role = $('#ddlRoles :selected').text();
+
+    if (role == "District Pharmacist") {
+        $('#BarangayDropdown').attr('disabled', true);
+
+
+    } else if (role == "Health Center Staff") {
+
+        $('#BarangayDropdown').attr('disabled', false);
+        $('#BarangayDropdown').empty().append('<option selected hidden disabled>Select a Barangay</option>');
+        $.each(brgyList, function (index, code) {
         var data = code.split(',');
         if (data[2] == $('#districtsDropdown').val()) {
             $('#BarangayDropdown').append($('<option>', {
@@ -463,6 +471,12 @@ $('#districtsDropdown').on('change', function () {
             }));
         }
     });
+
+    } else {
+
+        $('#districtsDropdown').attr('disabled', true);
+        $('#BarangayDropdown').attr('disabled', true);
+    }
 });
 
 
@@ -500,6 +514,3 @@ function LoadDropdown(_action) {
         }
     })
 };
-
-
-
