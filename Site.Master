@@ -1,0 +1,316 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="PPMPS.SiteMaster" %>
+
+<%@ Import Namespace ="System.Web.Optimization" %>
+<%@ Import Namespace ="PPMPS.Models" %>
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - PPMPS</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    <asp:PlaceHolder ID="mainStyles" runat="server">
+        <webopt:BundleReference ID="styles" runat="server" Path="~/bundles/styles"></webopt:BundleReference>
+    </asp:PlaceHolder>
+
+    <asp:ContentPlaceHolder ID="globalStyles" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body class="sidebar-mini control-sidebar-slide-open" style="height: auto;">
+
+    <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="<%= ResolveUrl("~/Content/Images/qc_logo.png") %>" height="60" width="60">
+    </div>
+
+    <form runat="server">
+            <div class="wrapper">
+         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+       <ul class="navbar-nav">
+           <li class="nav-item">
+               <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+           </li>
+       </ul>
+       <ul class="navbar-nav ml-auto">
+           <li class="nav-item dropdown">
+               <a class="nav-link" data-toggle="dropdown" href="#">
+                   <i class="far fa-bell"></i>
+                   <span class="badge badge-warning navbar-badge"><%if (Session["CheckSessionLowStocksCounter"] != null) { Response.Write(Session["CheckSessionLowStocksCounter"].ToString()); } %></span>
+               </a>
+               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                   <span class="dropdown-item dropdown-header"><%if (Session["CheckSessionLowStocksCounter"] != null) { Response.Write(Session["CheckSessionLowStocksCounter"].ToString()); } %> Notifications</span>
+                   <div class="dropdown-divider"></div>
+                   <a href="#" class="dropdown-item">
+                       <i class="fas fa-envelope mr-2"></i>
+                       <%if (Session["CheckSessionLowStocksCounter"] != null)
+                           {
+                               var itemStocks = new List<string>();
+                               itemStocks = (List<string>)Session["CheckSessionLowStocks"];
+                               foreach (var items in itemStocks)
+                               {
+                       %>
+                                 Low Stocks for <span><% Response.Write(items); %></span>
+                       <%    
+                               }
+                           }
+                       %>
+                   </a>
+               </div>
+           </li>
+           <li class="nav-item dropdown">
+               <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     Welcome! <strong> <%if (Session["UserName"] != null) { Response.Write(Session["UserName"].ToString()); } %></strong>
+               </a>
+               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="bd-versions">
+                   <div class="text-center">
+                          <asp:LinkButton ID="btnSignOut" runat="server" Text="Sign out" OnClick="btn_SignOut" />
+                   </div>
+                 
+               </div>
+           </li>
+       </ul>
+   </nav>
+        <aside class="main-sidebar elevation-4 sidebar-dark-success">
+            <a href="#" class="brand-link">
+                <img src="<% Response.Write(ResolveUrl("~/Content/Images/QC_Health_Dept_Logo.png")); %>"" alt="PPMP Logo" class="brand-image img-circle elevation-3" style="opacity: .5">
+                <span class="brand-text font-weight-light">PPMP</span>
+            </a>
+            <div class="sidebar os-theme-dark">
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="<% Response.Write(ResolveUrl("~/Home.aspx")); %>" class="nav-link active">
+                                <i class="nav-icon fas fa-home"></i>
+                                <p>
+                                    Home
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-header font-weight-bold">TRANSACTION</li>
+
+                        <%if (Session["UserCode"].ToString() != "")
+                            {
+                                var options = new List<PPMP_PermissionModel>();
+                                options = (List<PPMP_PermissionModel>)Session["MenuTransaction"];
+                                foreach (var items in options)
+                                {
+
+                                    if (items.TreeView == 0 && items.Type == "Transaction")
+                                    {
+                        %>
+                        <li class="nav-item">
+                            <a href="<% Response.Write(ResolveUrl("~/" + items.ModuleName)); %>" class="nav-link">
+                                <i class="<% Response.Write("nav-icon " + items.Icon); %>"></i>
+                                <p>
+                                    <% Response.Write(items.DisplayText); %>
+                                </p>
+                            </a>
+                        </li>
+
+                        <%    
+                                    }
+                                }
+                            }
+                        %>
+                      <%if (Session["HasAllocationAccess"].ToString() != "")
+                              {  %>
+                  
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa fa-paper-plane"></i>
+                                <p>
+                                    Allocation
+                            <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                              <ul class="nav nav-treeview">
+                        <%if (Session["UserCode"].ToString() != "")
+                            {
+                                var options = new List<PPMP_PermissionModel>();
+                                options = (List<PPMP_PermissionModel>)Session["MenuTransaction"];
+                                foreach (var items in options)
+                                {
+
+                                    if (items.TreeView == 1 && items.Type == "Transaction")
+                                    {
+                        %>
+                          
+                                <li class="nav-item">
+                                    <a href="<% Response.Write(ResolveUrl("~/" + items.ModuleName)); %>" class="nav-link">
+                                        <i class="<% Response.Write("nav-icon " + items.Icon); %>"></i>
+                                        <p><% Response.Write(items.DisplayText); %></p>
+                                    </a>
+                                </li>
+                          
+                        <%    
+                                    }
+                                }
+                            }
+                        %>
+                            </ul>
+                        </li>
+                        <% } %>
+
+                        <%if (Session["MenuReportHasAny"].ToString() != "")
+                            {
+                                if (Session["MenuReportHasAny"].ToString() == "Grant")
+                                {
+                        %>
+
+                        <%}
+                            }
+                        %>
+
+                        <%if (Session["UserCode"].ToString() != "")
+                            {
+                        %>
+                        <li class="nav-item">
+                            <a href="<% Response.Write(ResolveUrl("~/Report/PPMP_Reports")); %>" class="nav-link">
+                                <i class="<% Response.Write("nav-icon fa fa-file"); %>"></i>
+                                <p>
+                                    Reports
+                                </p>
+                            </a>
+                        </li>
+
+                        <%    
+                            }
+                        %>
+
+                        <%if (Session["MenuMaintenanceHasAny"].ToString() != "")
+                            {
+                                if (Session["MenuMaintenanceHasAny"].ToString() == "Grant")
+                                {
+                        %>
+                        <li class="nav-header font-weight-bold">MAINTENANCE</li>
+                        <%}
+                            }
+                        %>
+                       <%if (Session["UserCode"].ToString() != "")
+                           {
+                               var options = new List<PPMP_PermissionModel>();
+                               options = (List<PPMP_PermissionModel>)Session["MenuMaintenance"];
+                               foreach (var items in options)
+                               {
+
+                                   if (items.TreeView == 0 && items.Type == "Masterfile")
+                                   {
+                        %>
+                        <li class="nav-item">
+                            <a href="<% Response.Write(ResolveUrl("~/" + items.ModuleName)); %>" class="nav-link">
+                                <i class="<% Response.Write("nav-icon " + items.Icon); %>"></i>
+                                <p>
+                                    <% Response.Write(items.DisplayText); %>
+                                </p>
+                            </a>
+                        </li>
+
+                        <%    
+                                    }
+                                }
+                            }
+                        %>
+
+                        <%if (Session["HasLocationAccess"].ToString() != "")
+                            {  %>
+                      
+                        <li class="nav-item ">
+                              <a href="#" class="nav-link">
+                                  <i class="nav-icon fas fa fa-map"></i>
+                                  <p>
+                                      Location
+                              <i class="right fas fa-angle-left"></i>
+                                  </p>
+                              </a>
+                                <ul class="nav nav-treeview">
+                          <%if (Session["UserCode"].ToString() != "")
+                              {
+                                  var options = new List<PPMP_PermissionModel>();
+                                  options = (List<PPMP_PermissionModel>)Session["MenuMaintenance"];
+                                  foreach (var items in options)
+                                  {
+
+                                      if (items.TreeView == 1 && items.Type == "Masterfile")
+                                      {
+                          %>
+    
+                                      <li class="nav-item">
+                                          <a href="<% Response.Write(ResolveUrl("~/" + items.ModuleName)); %>" class="nav-link">
+                                              <i class="<% Response.Write("nav-icon " + items.Icon); %>"></i>
+                                              <p><% Response.Write(items.DisplayText); %></p>
+                                          </a>
+                                      </li>
+    
+                          <%    
+                                      }
+                                  }
+                              }
+                          %>
+                              </ul>
+                          </li>
+                          <% } %>
+
+                           <%if (Session["HasUserAccess"].ToString() != "")
+                               {  %>
+                        <li class="nav-item ">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa fa-users"></i>
+                                <p>
+                                    User Management
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <%if (Session["UserCode"].ToString() != "")
+                                    {
+                                        var options = new List<PPMP_PermissionModel>();
+                                        options = (List<PPMP_PermissionModel>)Session["MenuMaintenance"];
+                                        foreach (var items in options)
+                                        {
+
+                                            if (items.TreeView == 2 && items.Type == "Masterfile")
+                                            {
+                                %>
+
+                                <li class="nav-item">
+                                    <a href="<% Response.Write(ResolveUrl("~/" + items.ModuleName)); %>" class="nav-link">
+                                        <i class="<% Response.Write("nav-icon " + items.Icon); %>"></i>
+                                        <p><% Response.Write(items.DisplayText); %></p>
+                                    </a>
+                                </li>
+
+                                <%    
+                                            }
+                                        }
+                                    }
+                                %>
+                            </ul>
+                        </li>
+                          <% } %>
+
+
+                       
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <div class="content-wrapper" style="min-height: 1302.12px;">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </div>
+    </form>
+    <asp:PlaceHolder ID="mainScripts" runat="server">
+        <%: Scripts.Render("~/bundles/adminlte") %>
+    </asp:PlaceHolder>
+
+    <asp:ContentPlaceHolder ID="globalScripts" runat="server">
+    </asp:ContentPlaceHolder>
+</body>
+</html>

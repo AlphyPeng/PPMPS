@@ -1,0 +1,15 @@
+﻿.theme-color {
+   background-color: #125f24 !important;
+   color: #ffff !important;
+   font-weight: 600;
+}
+
+.disable-click {
+    pointer-events: none;
+    cursor:default;
+    opacity: 0.2;
+}
+
+.hidden{
+    display:none;
+}
