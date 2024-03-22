@@ -614,8 +614,20 @@ $("#printButton").click(function () {
         $this.attr("value", $this.val());
     });
 
-    // Create a new window and print the cloned section
-    var printWindow = window.open('', '_blank');
-    printWindow.document.body.innerHTML = contentSection[0].outerHTML;
-    printWindow.print();
+//    // Create a new window and print the cloned section
+//    var printWindow = window.open('', '_blank');
+//    printWindow.document.body.innerHTML = contentSection[0].outerHTML;
+//    printWindow.print();
+//});
+
+
+// Add a click event handler to the print button
+$("#printButton").click(function () {
+    // remove action column
+    $('#procurementList').DataTable().column(6).visible(false);
+
+    window.print();
+
+    // restore the action column
+    $('#procurementList').DataTable().column(6).visible(true);
 });

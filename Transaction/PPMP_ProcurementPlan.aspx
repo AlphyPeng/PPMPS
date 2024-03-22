@@ -4,6 +4,38 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+        <style>
+   @media print {
+       body {
+           -webkit-print-color-adjust: exact;
+               background-color: white;
+       }
+       #cardPrint, .content{
+           background-color: white;
+           border-color: white !important;
+       }
+         .dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+            .dataTables_wrapper .dataTables_paginate .paginate_button.next,
+            .dataTables_wrapper .dataTables_paginate {
+                display: none !important;
+            }
+        @page {
+        size: landscape;
+              margin: 10px 0; 
+        }
+            #printButton,
+            #addItems,
+            #addProcurement,
+            #editProcurement,
+            #cancelProcurement,
+            #saveProcurement,
+            #postPPMP,
+            #procurementTitle,
+            #listPPMP{
+            display: none;
+        }
+    }
+</style>
 
     <div class="content-header">
         <div class="container-fluid">
@@ -148,7 +180,7 @@
                             <div class="row">
                                 <div class="col-md-6 text-left mt-4">
                                     <a class="btn bg-gradient-success" id="postPPMP" href="#"><i class="fa fa-solid fa-paper-plane">&nbsp Post</i></a>
-                                       <button class="btn bg-gradient-info" id="printButton">Print Section</button>
+                                    <a href="#" class="btn bg-gradient-info" id="printButton"><i class="">&nbsp Print</i></a>
 
                                 </div>
                                 <div class="col-md-6 text-right mt-4">

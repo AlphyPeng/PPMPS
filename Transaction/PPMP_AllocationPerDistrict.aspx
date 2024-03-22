@@ -1,7 +1,35 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="PPMP_AllocationPerDistrict.aspx.cs" Inherits="PPMPS.Transaction.PPMP_AllocationPerDistrict" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
+               <style>
+   @media print {
+       body {
+           -webkit-print-color-adjust: exact;
+               background-color: white;
+       }
+       #cardPrint, .content{
+           background-color: white;
+           border-color: white !important;
+       }
+         .dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+            .dataTables_wrapper .dataTables_paginate .paginate_button.next,
+            .dataTables_wrapper .dataTables_paginate {
+                display: none !important;
+            }
+        @page {
+        size: landscape;
+              margin: 10px 0; 
+        }
+        #summaryCard{
+border-left: solid 2px #e9ecef;
+border-right: solid 2px #e9ecef;
+border-bottom: solid 2px #e9ecef;
+        }
+           .btn, #listPPMP{
+            display: none;
+        }
+    }
+</style>
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -20,7 +48,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3" id="listPPMP">
                     <div class="card card-success">
                         <div class="card-header theme-color">
                             <h4 class="card-title mb-1">List of PPMP Codes</h4>
@@ -52,37 +80,37 @@
                     </div>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-9 col-12">
                     <div class="card">
                         <div class="card-header theme-color">
                             <h3 class="card-title">List of District</h3>
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 col-12">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 col-4">
                                             <div class="form-group">
                                                 <label for="PPMPCode">PPMP Code</label>
                                                 <input type="text" class="form-control" id="PPMPCode_AllocPerDistict" readonly />
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 col-4">
                                             <div class="form-group">
                                                 <label for="ProgramTitle">Program Title</label>
                                                 <input type="text" class="form-control" id="ProgramTitle_AllocPerDistict" readonly />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 col-4">
                                             <div class="form-group">
                                                 <label for="AccountTitle">Account Title</label>
                                                 <input type="text" class="form-control" id="AccountTitle_AllocPerDistict" readonly />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 table-responsive">
-                                        <table class="table table-striped table-responsive-md" id="procurementList_AllocationPerDistrict">
+                                    <div class="col-md-12 col-12 table-responsive">
+                                        <table class="table table-striped" id="procurementList_AllocationPerDistrict">
                                             <thead>
                                                 <tr>
                                                     <th>Line #</th>
@@ -103,6 +131,7 @@
                                 <div class="col-md-6 text-left mt-4">
                                     <a class="btn btn-outline-success disable-click" id="btnPostAllocation_District" href="#"><i class="fa fa-solid fa-paper-plane">&nbsp Send</i></a>
                                     <a class="btn btn-outline-success disable-click" id="btnAssignToAll_District" href="#"><i class="fa fa-solid fa-list">&nbsp Allocate All</i></a>
+                                     <a href="#" class="btn bg-gradient-info" id="printButton"><i class="">&nbsp Print</i></a>
                                 </div>
                                 <div class="col-md-6 text-right mt-4">
                                 </div>

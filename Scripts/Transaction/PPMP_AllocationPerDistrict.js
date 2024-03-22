@@ -275,3 +275,12 @@ function RefreshValues_District() {
     $('#btnPostAllocation_District').addClass("disable-click");
     $('#btnAssignToAll_District').addClass("disable-click");
 };
+
+
+// Print 
+$("#printButton").click(function () {
+
+    window.print();
+});
+
+//aw

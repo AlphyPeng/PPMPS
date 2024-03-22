@@ -288,3 +288,11 @@ function RefreshValues_Program() {
     $('#btnPostAllocation_Program').addClass("disable-click");
     $('#btnAssignToAll_Program').addClass("disable-click");
 };
+
+// Print 
+$("#printButton").click(function () {
+
+    window.print();
+});
+
+
