@@ -463,14 +463,14 @@ $('#districtsDropdown').on('change', function () {
         $('#BarangayDropdown').attr('disabled', false);
         $('#BarangayDropdown').empty().append('<option selected hidden disabled>Select a Barangay</option>');
         $.each(brgyList, function (index, code) {
-        var data = code.split(',');
-        if (data[2] == $('#districtsDropdown').val()) {
-            $('#BarangayDropdown').append($('<option>', {
-                value: data[0],
-                text: data[1]
-            }));
-        }
-    });
+            var data = code.split(',');
+            if (data[2] == $('#districtsDropdown').val()) {
+                $('#BarangayDropdown').append($('<option>', {
+                    value: data[0],
+                    text: data[1]
+                }));
+            }
+        });
 
     } else {
 
